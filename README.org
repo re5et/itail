@@ -13,3 +13,23 @@ Install package from http://melpa.milkbox.net/#installing
 
 : (require 'itail)
 : M-x itail RET /file/to/tail
+
+Add / remove / toggle filters and highlight tail results using the
+below mode bindings.
+
+You can customize a few useful things by
+: M-x customize RET
+and search for itail
+
+* Mode Keys
+
+key        binding
+---        -------
+C-c -      itail-remove-last-filter
+C-c c      itail-clear
+C-c f      itail-toggle-filter
+C-c g      itail-add-grep
+C-c h      itail-highlight
+C-c r      itail-remove-all-filters
+C-c s      itail-show-filters
+C-c u      itail-unhighlight
