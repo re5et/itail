@@ -206,3 +206,5 @@ output through the filter pipeline."
               (concat " | " (itail-filter-pipeline)))))))
 
 (provide 'itail)
+;;; itail.el ends here
+(package-buffer-info)
