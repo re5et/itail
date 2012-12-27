@@ -1,0 +1,15 @@
+* Commentary
+
+An interactive tail mode that allows you to filter the tail with
+unix pipes and highlight the contents of the tailed file. Works
+locally or on remote files using tramp.
+
+* Installation
+
+Install package from http://melpa.milkbox.net/#installing
+: M-x package-install RET itail RET
+
+* Usage
+
+: (require 'itail)
+: M-x itail RET /file/to/tail
