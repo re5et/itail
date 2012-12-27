@@ -23,13 +23,13 @@ and search for itail
 
 * Mode Keys
 
-key        binding
----        -------
-C-c -      itail-remove-last-filter
-C-c c      itail-clear
-C-c f      itail-toggle-filter
-C-c g      itail-add-grep
-C-c h      itail-highlight
-C-c r      itail-remove-all-filters
-C-c s      itail-show-filters
-C-c u      itail-unhighlight
+: key        binding
+: ---        -------
+: C-c -      itail-remove-last-filter
+: C-c c      itail-clear
+: C-c f      itail-toggle-filter
+: C-c g      itail-add-grep
+: C-c h      itail-highlight
+: C-c r      itail-remove-all-filters
+: C-c s      itail-show-filters
+: C-c u      itail-unhighlight
