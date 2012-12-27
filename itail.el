@@ -207,4 +207,3 @@ output through the filter pipeline."
 
 (provide 'itail)
 ;;; itail.el ends here
-(package-buffer-info)
