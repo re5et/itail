@@ -5,7 +5,7 @@
 ;; Author: atom smith
 ;; URL: https://github.com/re5et/itail
 ;; Created: 26 Dec 2012
-;; Version: 0.0.1
+;; Version: 0.0.2
 ;; Keywords: tail
 
 ;; This file is NOT part of GNU Emacs.
@@ -101,7 +101,7 @@ clearing and filtering
          (remote-match (string-match "\\(.*:\\)\\(.*\\)" file))
          (default-directory (if remote-match (match-string 1 file) default-directory))
          (file (if remote-match (match-string 2 file) file)))
-    (make-comint buffer-name "tail" nil "-f" file)
+    (make-comint buffer-name "tail" nil "-f" (expand-file-name file))
     (pop-to-buffer (concat "*" buffer-name "*")))
   (ansi-color-for-comint-mode-on)
   (add-hook 'comint-preoutput-filter-functions 'itail-output-filter)
