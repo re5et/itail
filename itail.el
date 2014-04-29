@@ -116,7 +116,15 @@ clearing and filtering
 Very useful when the tail has had a great deal of information dumped
 to it and emacs can not keep up"
   (interactive)
-  (comint-kill-subjob)
+  (insert (concat "reloading " (buffer-name (current-buffer))))
+  (let ((process (get-buffer-process (current-buffer))))
+    (if process
+        (progn
+          (set-process-sentinel process 'itail-internal-reload)
+          (comint-quit-subjob))
+      (itail-internal-reload))))
+
+(defun itail-internal-reload (&rest args)
   (itail-clear)
   (itail itail-file)
   (end-of-buffer))

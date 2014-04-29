@@ -33,3 +33,4 @@ and search for itail
 : C-c r      itail-remove-all-filters
 : C-c s      itail-show-filters
 : C-c u      itail-unhighlight
+: C-c C-k    itail-reload
