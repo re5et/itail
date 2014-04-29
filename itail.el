@@ -51,6 +51,7 @@
     (define-key itail-map (kbd "C-c h") 'itail-highlight)
     (define-key itail-map (kbd "C-c u") 'itail-unhighlight)
     (define-key itail-map (kbd "C-c C-k") 'itail-reload)
+    (define-key itail-map (kbd "C-c C-c") 'itail-kill)
     itail-map)
   "The keymap used in `itail-mode' buffers.")
 
@@ -117,17 +118,29 @@ Very useful when the tail has had a great deal of information dumped
 to it and emacs can not keep up"
   (interactive)
   (insert (concat "reloading " (buffer-name (current-buffer))))
+  (itail-kill-with-process-sentinel 'itail-internal-reload))
+
+(defun itail-internal-reload (&rest ignored)
+  ;; (itail-clear)
+  (itail itail-file)
+  (comint-show-maximum-output))
+
+(defun itail-kill ()
+  "Kill the tail process and close the buffer"
+  (interactive)
+  (insert (concat "killing " (buffer-name (current-buffer))))
+  (itail-kill-with-process-sentinel 'itail-internal-kill))
+
+(defun itail-internal-kill (&rest ignored)
+  (kill-buffer (current-buffer)))
+
+(defun itail-kill-with-process-sentinel (sentinel)
   (let ((process (get-buffer-process (current-buffer))))
     (if process
         (progn
-          (set-process-sentinel process 'itail-internal-reload)
+          (set-process-sentinel process sentinel)
           (comint-quit-subjob))
-      (itail-internal-reload))))
-
-(defun itail-internal-reload (&rest args)
-  (itail-clear)
-  (itail itail-file)
-  (end-of-buffer))
+      (funcall sentinel))))
 
 (defun itail-clear ()
   "Clear out the tail buffer"
