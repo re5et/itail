@@ -1,11 +1,11 @@
 ;;; itail.el --- An interactive tail mode
 
-;; Copyright (C) 2012 @re5et
+;; Copyright (C) 2012-2014 @re5et
 
 ;; Author: atom smith
 ;; URL: https://github.com/re5et/itail
 ;; Created: 26 Dec 2012
-;; Version: 0.0.2
+;; Version: 0.0.5
 ;; Keywords: tail
 
 ;; This file is NOT part of GNU Emacs.
@@ -50,6 +50,7 @@
     (define-key itail-map (kbd "C-c r") 'itail-remove-all-filters)
     (define-key itail-map (kbd "C-c h") 'itail-highlight)
     (define-key itail-map (kbd "C-c u") 'itail-unhighlight)
+    (define-key itail-map (kbd "C-c C-k") 'itail-reload)
     itail-map)
   "The keymap used in `itail-mode' buffers.")
 
@@ -109,6 +110,16 @@ clearing and filtering
   (setq itail-filters ())
   (itail-mode-line)
   (itail-mode))
+
+(defun itail-reload ()
+  "Kill the current tail operation, and reload using the same file.
+Very useful when the tail has had a great deal of information dumped
+to it and emacs can not keep up"
+  (interactive)
+  (comint-kill-subjob)
+  (itail-clear)
+  (itail itail-file)
+  (end-of-buffer))
 
 (defun itail-clear ()
   "Clear out the tail buffer"
