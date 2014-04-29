@@ -101,7 +101,7 @@ clearing and filtering
          (remote-match (string-match "\\(.*:\\)\\(.*\\)" file))
          (default-directory (if remote-match (match-string 1 file) default-directory))
          (file (if remote-match (match-string 2 file) file)))
-    (make-comint buffer-name "tail" nil "-f" (expand-file-name file))
+    (make-comint buffer-name "tail" nil "-f" file)
     (pop-to-buffer (concat "*" buffer-name "*")))
   (ansi-color-for-comint-mode-on)
   (add-hook 'comint-preoutput-filter-functions 'itail-output-filter)
