@@ -189,10 +189,11 @@ for specification on what matches to highlight what color."
   "Comint output filter for itail-mode. Filters
 output through the filter pipeline."
   (if itail-filters
-      (shell-command-to-string
-       (format "echo %s | %s"
-               (shell-quote-argument output)
-               (itail-filter-pipeline)))
+      (let ((shell-file-name "/bin/sh"))
+        (shell-command-to-string
+         (format "echo %s | %s"
+                 (shell-quote-argument output)
+                 (itail-filter-pipeline))))
     output))
 
 (defun itail-mode-line ()
