@@ -121,15 +121,15 @@ to it and emacs can not keep up"
   (itail-kill-with-process-sentinel 'itail-internal-reload))
 
 (defun itail-internal-reload (&rest ignored)
-  ;; (itail-clear)
   (itail itail-file)
   (comint-show-maximum-output))
 
 (defun itail-kill ()
   "Kill the tail process and close the buffer"
   (interactive)
-  (insert (concat "killing " (buffer-name (current-buffer))))
-  (itail-kill-with-process-sentinel 'itail-internal-kill))
+  (when (yes-or-no-p "Really kill itail? ")
+    (insert (concat "killing " (buffer-name (current-buffer))))
+    (itail-kill-with-process-sentinel 'itail-internal-kill)))
 
 (defun itail-internal-kill (&rest ignored)
   (kill-buffer (current-buffer)))
