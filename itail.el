@@ -29,16 +29,18 @@
 ;; Boston, MA 02110-1301
 ;; USA
 
-;;; Commentary
+;;; Commentary:
 
 ;; An interactive tail mode that allows you to filter the tail with
 ;; unix pipes and highlight the contents of the tailed file. Works
 ;; locally or on remote files using tramp.
 
-;;; Usage
+;;; Usage:
 
 ;; (require 'itail)
 ;; M-x itail RET /file/to/tail
+
+;;; Code:
 
 (defvar itail-keymap
   (let ((itail-map (make-sparse-keymap)))
@@ -96,6 +98,7 @@ clearing and filtering
   " itail"
   :keymap itail-keymap)
 
+;;;###autoload
 (defun itail (file)
   "Tail file FILE in itail mode.  Supports remote tailing through tramp "
   (interactive "ftail file: ")
