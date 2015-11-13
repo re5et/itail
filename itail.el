@@ -98,6 +98,7 @@ clearing and filtering
   " itail"
   :keymap itail-keymap)
 
+;;;###autoload
 (defun itail (file)
   "Tail file FILE in itail mode.  Supports remote tailing through tramp "
   (interactive "ftail file: ")
