@@ -105,7 +105,7 @@ clearing and filtering
          (file (if remote-match
                    (match-string 2 file)
                  (expand-file-name file))))
-    (make-comint buffer-name "tail" nil "-f" file)
+    (make-comint buffer-name "tail" nil "-F" file)
     (pop-to-buffer (concat "*" buffer-name "*")))
   (ansi-color-for-comint-mode-on)
   (add-hook 'comint-preoutput-filter-functions 'itail-output-filter)
@@ -235,7 +235,7 @@ output through the filter pipeline."
   (if itail-fancy-mode-line
       (setq
        mode-line-format
-       `(" tail -f "
+       `(" tail -F "
          ,itail-file
          ,(if (itail-filter-pipeline)
               (concat " | " (itail-filter-pipeline)))))))
