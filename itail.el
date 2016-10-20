@@ -99,7 +99,7 @@ clearing and filtering
   :keymap itail-keymap)
 
 ;;;###autoload
-(defun itail (file)
+(defun itail (file &optional current-window)
   "Tail file FILE in itail mode.  Supports remote tailing through tramp "
   (interactive "ftail file: ")
   (let* ((buffer-name (concat "tail " file))
@@ -109,7 +109,11 @@ clearing and filtering
                    (match-string 2 file)
                  (expand-file-name file))))
     (make-comint buffer-name "tail" nil "-F" file)
-    (pop-to-buffer (concat "*" buffer-name "*")))
+    (if current-window
+        (switch-to-buffer (concat "*" buffer-name "*"))
+        (pop-to-buffer (concat "*" buffer-name "*"))
+    )
+  )
   (ansi-color-for-comint-mode-on)
   (add-hook 'comint-preoutput-filter-functions 'itail-output-filter)
   (setq itail-file file)
