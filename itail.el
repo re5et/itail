@@ -133,6 +133,7 @@ clearing and filtering
     (funcall itail-open-fn (concat "*" buffer-name "*")))
   (ansi-color-for-comint-mode-on)
   (add-hook 'comint-preoutput-filter-functions 'itail-output-filter)
+  (setq buffer-read-only t)
   (setq itail-file file)
   (setq itail-filters ())
   (itail-mode-line)
