@@ -120,8 +120,8 @@ clearing and filtering
 ;;;###autoload
 (defun itail (file &optional lines)
   "Tail file FILE in itail mode.  Supports remote tailing through tramp "
-  (interactive "ftail file: \nP")
-  (let* ((buffer-name (concat "tail " file))
+  (interactive "fTail file: \nP")
+  (let* ((buffer-name (concat "itail: " file))
          (remote-match (string-match "\\(.*:\\)\\(.*\\)" file))
          (default-directory (if remote-match (match-string 1 file) default-directory))
          (file (if remote-match
