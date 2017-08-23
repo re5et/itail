@@ -5,7 +5,7 @@
 ;; Author: atom smith
 ;; URL: https://github.com/re5et/itail
 ;; Created: 26 Dec 2012
-;; Version: 0.0.6
+;; Version: 0.0.7
 ;; Keywords: tail
 
 ;; This file is NOT part of GNU Emacs.
@@ -41,6 +41,10 @@
 ;; M-x itail RET /file/to/tail
 
 ;;; Code:
+
+(eval-when-compile
+  (require 'dired nil :noerror)
+  (require 'ffap nil :noerror))
 
 (defvar itail-keymap
   (let ((itail-map (make-sparse-keymap)))
@@ -120,7 +124,21 @@ clearing and filtering
 ;;;###autoload
 (defun itail (file &optional lines)
   "Tail file FILE in itail mode.  Supports remote tailing through tramp "
-  (interactive "fTail file: \nP")
+  (interactive (list (let* ((file (or (and (eq major-mode 'dired-mode)
+                                           (dired-get-filename nil :no-error-if-not-filep))
+                                      (when (require 'ffap nil :noerror)
+                                        (ffap-file-at-point))))
+                            (dir (unless (zerop (length file))
+                                   (and (file-directory-p file)
+                                        (file-name-as-directory file))))
+                            (file (unless (zerop (length file))
+                                    (file-relative-name file))))
+                       (read-file-name (if (and (null dir) file)
+                                           (format "Tail file (%s): " file)
+                                         "Tail file: ")
+                                       dir
+                                       (and (null dir) file)))
+                     current-prefix-arg))
   (let* ((file (expand-file-name file))
          (buffer-name (concat "itail: " file))
          (file (file-relative-name file))
