@@ -5,7 +5,7 @@
 ;; Author: atom smith
 ;; URL: https://github.com/re5et/itail
 ;; Created: 26 Dec 2012
-;; Version: 0.0.5
+;; Version: 0.0.6
 ;; Keywords: tail
 
 ;; This file is NOT part of GNU Emacs.
@@ -121,12 +121,15 @@ clearing and filtering
 (defun itail (file &optional lines)
   "Tail file FILE in itail mode.  Supports remote tailing through tramp "
   (interactive "fTail file: \nP")
-  (let* ((buffer-name (concat "itail: " file))
-         (remote-match (string-match "\\(.*:\\)\\(.*\\)" file))
-         (default-directory (if remote-match (match-string 1 file) default-directory))
-         (file (if remote-match
-                   (match-string 2 file)
-                 (expand-file-name file)))
+  (let* ((file (expand-file-name file))
+         (buffer-name (concat "itail: " file))
+         (file (file-relative-name file))
+         (default-directory (or (and (file-name-absolute-p file)
+                                     (or (file-remote-p file)
+                                         (and (file-remote-p default-directory)
+                                              "~/")))
+                                default-directory))
+         (file (or (file-remote-p file 'localname) file))
          (lines (or lines (if (functionp itail-lines) (funcall itail-lines) itail-lines))))
     (apply #'make-comint buffer-name "tail" nil "-F" file (when (numberp lines)
                                                             (list "-n" (format "%+d" lines))))
