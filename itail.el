@@ -1,11 +1,11 @@
 ;;; itail.el --- An interactive tail mode
 
-;; Copyright (C) 2012-2014 @re5et
+;; Copyright (C) 2012-2017 @re5et
 
 ;; Author: atom smith
 ;; URL: https://github.com/re5et/itail
 ;; Created: 26 Dec 2012
-;; Version: 0.0.7
+;; Version: 0.0.8
 ;; Keywords: tail
 
 ;; This file is NOT part of GNU Emacs.
@@ -167,7 +167,7 @@ Very useful when the tail has had a great deal of information dumped
 to it and emacs can not keep up"
   (interactive)
   (let ((inhibit-read-only t))
-    (insert (concat "reloading " (buffer-name (current-buffer)))))
+    (insert (concat "reloading " (buffer-name (current-buffer)) "\n")))
   (itail-kill-with-process-sentinel 'itail-internal-reload))
 
 (defun itail-internal-reload (&rest ignored)
@@ -179,7 +179,7 @@ to it and emacs can not keep up"
   (interactive)
   (when (yes-or-no-p "Really kill itail? ")
     (let ((inhibit-read-only t))
-      (insert (concat "killing " (buffer-name (current-buffer))))
+      (insert (concat "killing " (buffer-name (current-buffer)) "\n"))
       (itail-kill-with-process-sentinel 'itail-internal-kill))))
 
 (defun itail-internal-kill (&rest ignored)
