@@ -6,7 +6,7 @@ locally or on remote files using tramp.
 
 * Installation
 
-Install package from http://melpa.milkbox.net/#installing
+Install package from https://melpa.org/#/getting-started
 : M-x package-install RET itail RET
 
 * Usage
